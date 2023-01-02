@@ -6,6 +6,18 @@ import { AppDispatch } from "../store";
 
 const JSON_API = " http://localhost:8000/contacts";
 
+export const createContact = (name: string, lastName: string, phone: number) => async(dispatch: AppDispatch) => {
+  const contactObj = {
+    name,
+    lastName,
+    phone
+  }
+
+  let res = await axios.post(JSON_API, contactObj);
+  dispatch(contactsAction(res.data))
+  console.log(res);
+}
+
 export const contactsForm =
   (name: string, lastName: string, phone: number) =>
   async (dispatch: AppDispatch) => {
