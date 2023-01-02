@@ -27,36 +27,37 @@ export const contactsForm =
     formData.append("phone", phone);
 
     console.log(formData);
-
-    const addContact = (contact: any) => {
-      return async () => {
-        const res = await axios.post(JSON_API, contact);
-        dispatch(contactsAction(res.data));
-      };
-    };
-    const getContacts = () => {
-      return async (dispatch: AppDispatch) => {
-        try {
-          const res = await axios.get(JSON_API);
-          // console.log(res);
-          dispatch(contactsAction(res.data));
-        } catch (e) {
-          console.log(e);
-        }
-      };
-    };
-
-    const deleteContact = (id: number) => {
-      return async () => {
-        await axios.delete(`${JSON_API}/${id}`);
-        getContacts();
-      };
-    };
-
-    const updateContact = (contact: any) => {
-      return async () => {
-        await axios.patch(`${JSON_API}/${contact.id}`, contact);
-        getContacts();
-      };
-    };
   };
+
+export const addContact = (contact: any) => {
+  return async (dispatch: AppDispatch) => {
+    const res = await axios.post(JSON_API, contact);
+    dispatch(contactsAction(res.data));
+  };
+};
+
+export const getContacts = () => {
+  return async (dispatch: AppDispatch) => {
+    try {
+      const res = await axios.get(JSON_API);
+      // console.log(res);
+      dispatch(contactsAction(res.data));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const deleteContact = (id: number) => {
+  return async () => {
+    await axios.delete(`${JSON_API}/${id}`);
+    getContacts();
+  };
+};
+
+export const updateContact = (contact: any) => {
+  return async () => {
+    await axios.patch(`${JSON_API}/${contact.id}`, contact);
+    getContacts();
+  };
+};
