@@ -1,7 +1,7 @@
 import React from "react";
 
 const ContactEdit = () => {
-  return <div></div>;
+  return <div>contact</div>;
 };
 
 export default ContactEdit;

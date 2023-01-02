@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { contactsForm } from "../../store/actions/contacts";
+import { createContact } from "../../store/actions/contacts";
 import { useAppDispatch } from "../../store/hooks";
 
 const ContactAdd = () => {
@@ -7,10 +8,10 @@ const ContactAdd = () => {
 
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState(0);
+  const [phone, setPhone] = useState("");
 
   const addContact = () => {
-    dispatch(contactsForm(name, lastName, phone));
+    dispatch(createContact(name, lastName, +phone));
   };
 
   return (
@@ -29,7 +30,7 @@ const ContactAdd = () => {
         />
         <textarea
           value={phone}
-          onChange={e => setPhone(+e.target.value)}
+          onChange={e => setPhone(e.target.value)}
           placeholder="phone..."
         />
       </div>
