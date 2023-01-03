@@ -3,3 +3,7 @@ export interface IContacts {
   lastName: "string";
   phone: number;
 }
+
+export interface IContactsProps {
+  contact: any[];
+}

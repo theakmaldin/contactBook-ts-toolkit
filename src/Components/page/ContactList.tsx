@@ -21,7 +21,18 @@ import LoginIcon from "@mui/icons-material/Login";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { useAppDispatch, useTypedSelector } from "../../store/hooks";
+import {
+  createContact,
+  deleteContact,
+  getContacts,
+} from "../../store/actions/contacts";
+import { useSelector } from "react-redux";
+import { Button, Grid } from "@mui/material";
+import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import FaceRetouchingOffIcon from "@mui/icons-material/FaceRetouchingOff";
+import { isTemplateExpression } from "typescript";
 
 const drawerWidth = 240;
 
@@ -94,6 +105,8 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function ContactList() {
+  const dispatch = useAppDispatch();
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -104,6 +117,17 @@ export default function ContactList() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const contacts = useSelector((state: any) => state.contacts.contacts);
+  // const { contact } = useTypedSelector(state => contact.contactsReducer);
+
+  React.useEffect(() => {
+    dispatch(getContacts());
+  }, []);
+
+  // const getContact = () => {
+  //   dispatch(createContact(name, lastName, +phone));
+  // };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -234,38 +258,55 @@ export default function ContactList() {
         {/* ================================================================================================ */}
         <Divider />
       </Drawer>
+
+      {/* ================  Contact-card START ================= */}
+
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        <Grid
+          display="flex"
+          justifyContent="center"
+          style={{
+            fontSize: "30px",
+            fontWeight: "bold",
+          }}>
+          Contact-Book:
+        </Grid>
+
+        {/* {contacts.map((item: any) => { */}
+        <Box display="flex" justifyContent="center">
+          <Box width="22%" padding="10px">
+            <Grid
+              display="flex"
+              justifyContent="space-between"
+              bgcolor="lightblue"
+              borderRadius="20px"
+              padding="10px">
+              <Grid display="flex" alignItems="center">
+                <FaceRetouchingNaturalIcon sx={{ fontSize: "40px" }} />
+                <Grid marginLeft="25px" marginTop="10px" marginBottom="10px">
+                  <Typography>Name: Akmaldin</Typography>
+                  {/* <Typography>`name: ${item.name}`</Typography> */}
+                  <Typography>LastName: Kushanlo</Typography>
+                  <Typography>Phone: 9966703902533</Typography>
+                </Grid>
+              </Grid>
+
+              <Grid marginTop="7px" display="flex" flexDirection="column">
+                <DeleteForeverIcon
+                  sx={{ fontSize: "40px" }}
+                  // onClick={() => dispatch(deleteContact(item.id))}
+                />
+                <FaceRetouchingOffIcon sx={{ fontSize: "40px" }} />
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        {/* })} */}
+        {/* <Typography paragraph>{item.name}</Typography>; */}
       </Box>
+
+      {/* ================  Contact-card END ================= */}
     </Box>
   );
 }
