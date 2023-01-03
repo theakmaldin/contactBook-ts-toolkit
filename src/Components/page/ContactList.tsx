@@ -33,6 +33,7 @@ import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import FaceRetouchingOffIcon from "@mui/icons-material/FaceRetouchingOff";
 import { isTemplateExpression } from "typescript";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const drawerWidth = 240;
 
@@ -283,7 +284,7 @@ export default function ContactList() {
               borderRadius="20px"
               padding="10px">
               <Grid display="flex" alignItems="center">
-                <FaceRetouchingNaturalIcon sx={{ fontSize: "40px" }} />
+                <FaceRetouchingNaturalIcon sx={{ fontSize: "35px" }} />
                 <Grid marginLeft="25px" marginTop="10px" marginBottom="10px">
                   <Typography>Name: Akmaldin</Typography>
                   {/* <Typography>`name: ${item.name}`</Typography> */}
@@ -293,14 +294,17 @@ export default function ContactList() {
               </Grid>
 
               <Grid marginTop="7px" display="flex" flexDirection="column">
-                <Button>
+                <IconButton aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+                {/* <Button>
                   <DeleteForeverIcon
                     sx={{ fontSize: "40px" }}
                     // onClick={() => dispatch(deleteContact(item.id))}
                   />
-                </Button>
+                </Button> */}
                 <Button>
-                  <FaceRetouchingOffIcon sx={{ fontSize: "40px" }} />
+                  <FaceRetouchingOffIcon sx={{ fontSize: "25px" }} />
                 </Button>
               </Grid>
             </Grid>
