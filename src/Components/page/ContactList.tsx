@@ -275,7 +275,7 @@ export default function ContactList() {
 
         {/* {contacts.map((item: any) => { */}
         <Box display="flex" justifyContent="center">
-          <Box width="22%" padding="10px">
+          <Box width="25%" padding="10px">
             <Grid
               display="flex"
               justifyContent="space-between"
@@ -293,11 +293,15 @@ export default function ContactList() {
               </Grid>
 
               <Grid marginTop="7px" display="flex" flexDirection="column">
-                <DeleteForeverIcon
-                  sx={{ fontSize: "40px" }}
-                  // onClick={() => dispatch(deleteContact(item.id))}
-                />
-                <FaceRetouchingOffIcon sx={{ fontSize: "40px" }} />
+                <Button>
+                  <DeleteForeverIcon
+                    sx={{ fontSize: "40px" }}
+                    // onClick={() => dispatch(deleteContact(item.id))}
+                  />
+                </Button>
+                <Button>
+                  <FaceRetouchingOffIcon sx={{ fontSize: "40px" }} />
+                </Button>
               </Grid>
             </Grid>
           </Box>
