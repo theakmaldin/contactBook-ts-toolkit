@@ -1,16 +1,28 @@
 {
   "contacts": [
     {
-      "name": "wsdfg",
-      "lastName": "wsedfgh",
-      "phone": 345678,
+      "name": "Akmaldin",
+      "lastName": "Kushanlo",
+      "phone": 966703902533,
       "id": 1
     },
     {
-      "name": "ilia",
-      "lastName": "tikhomirov",
-      "phone": 7777777777,
+      "name": "Azret",
+      "lastName": "Aidana",
+      "phone": 99655555555,
       "id": 2
+    },
+    {
+      "name": "Fatima",
+      "lastName": "Lansarova",
+      "phone": 996703902533,
+      "id": 3
+    },
+    {
+      "name": "",
+      "lastName": "",
+      "phone": 0,
+      "id": 4
     }
   ]
 }

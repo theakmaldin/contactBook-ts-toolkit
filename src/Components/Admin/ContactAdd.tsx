@@ -1,5 +1,7 @@
+import { Box, Button, Grid, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { contactsForm } from "../../store/actions/contacts";
+import { Link } from "react-router-dom";
+// import { contactsForm } from "../../store/actions/contacts";
 import { createContact } from "../../store/actions/contacts";
 import { useAppDispatch } from "../../store/hooks";
 
@@ -15,26 +17,45 @@ const ContactAdd = () => {
   };
 
   return (
-    <div>
-      <div className="add_form">
-        <h2>Add new contact!</h2>
-        <textarea
+    <div style={{ marginTop: "150px" }}>
+      <h2 style={{ display: "flex", justifyContent: "center" }}>
+        Add new contact!
+      </h2>
+      <Grid
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="column">
+        <TextField
+          sx={{ marginBottom: "15px" }}
+          variant="outlined"
+          label="Name..."
           value={name}
           onChange={e => setName(e.target.value)}
-          placeholder="Name..."
+          // placeholder="Name..."
         />
-        <textarea
+        <TextField
+          sx={{ marginBottom: "15px" }}
+          variant="outlined"
+          label="LastName..."
           value={lastName}
           onChange={e => setLastName(e.target.value)}
-          placeholder="LastName..."
+          // placeholder="LastName..."
         />
-        <textarea
+        <TextField
+          sx={{ marginBottom: "15px" }}
+          variant="outlined"
+          label="Phone..."
           value={phone}
           onChange={e => setPhone(e.target.value)}
-          placeholder="phone..."
+          // placeholder="phone..."
         />
-      </div>
-      <button onClick={addContact}>Add contact</button>
+        <Link style={{ textDecoration: "none" }} to="/">
+          <Button variant="contained" onClick={addContact}>
+            Add contact
+          </Button>
+        </Link>
+      </Grid>
     </div>
   );
 };
