@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
-import { contactAction } from "../slices/contacts";
+import { contactAction, getContactDetails } from "../slices/contacts";
 // import { IContacts } from "../../types/contacts";
 import { AppDispatch } from "../store";
 
@@ -63,3 +63,35 @@ export const updateContact = (contact: any) => {
     getContacts();
   };
 };
+
+export const editContactDetails =
+  (id: number) => async (dispatch: AppDispatch) => {
+    try {
+      let res = await axios(`${JSON_API}${id}`);
+      // console.log(res);
+      dispatch(getContactDetails(res.data));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+export const saveEditedContacts =
+  (name: string, lastName: string, phone: number, id: number) =>
+  async (dispatch: AppDispatch) => {
+    let newContact = {
+      name: name,
+      lastName: lastName,
+      phone: phone,
+    };
+
+    try {
+      let res = await axios.patch(
+        `${JSON_API}${id}`,
+        JSON.stringify(newContact)
+      );
+      // console.log(res);
+      getContacts();
+    } catch (e) {
+      console.log(e);
+    }
+  };

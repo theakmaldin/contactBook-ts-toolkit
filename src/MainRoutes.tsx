@@ -8,7 +8,7 @@ const MainRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<ContactList />} />
-      <Route path="/edit" element={<ContactEdit />} />
+      <Route path="/edit/:id" element={<ContactEdit />} />
       <Route path="/add" element={<ContactAdd />} />
     </Routes>
   );
