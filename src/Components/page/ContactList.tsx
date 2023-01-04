@@ -20,11 +20,12 @@ import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import LoginIcon from "@mui/icons-material/Login";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useTypedSelector } from "../../store/hooks";
 import {
   createContact,
   deleteContact,
+  editContactDetails,
   getContacts,
 } from "../../store/actions/contacts";
 import { useSelector } from "react-redux";
@@ -34,6 +35,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import FaceRetouchingOffIcon from "@mui/icons-material/FaceRetouchingOff";
 import { isTemplateExpression } from "typescript";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { getContactDetails } from "../../store/slices/contacts";
 
 const drawerWidth = 240;
 
@@ -108,8 +110,15 @@ const Drawer = styled(MuiDrawer, {
 export default function ContactList() {
   const dispatch = useAppDispatch();
 
+  const contacts = useSelector((state: any) => state.contacts.contacts);
+  const contactDetails = useSelector(
+    (state: any) => state.contacts.contactsDetails
+  );
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+
+  // const [detailsContact, setDetailsContact] = React.useState(contactDetails);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -119,16 +128,22 @@ export default function ContactList() {
     setOpen(false);
   };
 
-  const contacts = useSelector((state: any) => state.contacts.contacts);
   // const { contact } = useTypedSelector(state => contact.contactsReducer);
 
   React.useEffect(() => {
     dispatch(getContacts());
   }, []);
 
-  // const getContact = () => {
-  //   dispatch(createContact(name, lastName, +phone));
-  // };
+  // React.useMemo(() => {
+  //   setDetailsContact(contactDetails);
+  //   dispatch(getContacts());
+  // }, [contactDetails]);
+
+  const getOneContactDetails = (id: number) => {
+    dispatch(getContactDetails(id));
+  };
+
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -165,7 +180,7 @@ export default function ContactList() {
         {/* ================================================================================================ */}
         <List>
           {["Login / Register"].map((text, index) => (
-            <Link to="/">
+            <Link style={{ textDecoration: "none", color: "gray" }} to="/">
               <ListItem key={text} disablePadding sx={{ display: "block" }}>
                 <ListItemButton
                   sx={{
@@ -188,7 +203,7 @@ export default function ContactList() {
           ))}
           {/* ================================================================================================ */}
           {["Add"].map((text, index) => (
-            <Link to="/add">
+            <Link style={{ textDecoration: "none", color: "gray" }} to="/add">
               <ListItem key={text} disablePadding sx={{ display: "block" }}>
                 <ListItemButton
                   sx={{
@@ -211,7 +226,7 @@ export default function ContactList() {
           ))}
           {/* ================================================================================================ */}
           {["Home"].map((text, index) => (
-            <Link to="/">
+            <Link style={{ textDecoration: "none", color: "gray" }} to="/">
               <ListItem key={text} disablePadding sx={{ display: "block" }}>
                 <ListItemButton
                   sx={{
@@ -234,7 +249,7 @@ export default function ContactList() {
           ))}
           {/* ================================================================================= */}
           {["Logout"].map((text, index) => (
-            <Link to="/">
+            <Link style={{ textDecoration: "none", color: "gray" }} to="/">
               <ListItem key={text} disablePadding sx={{ display: "block" }}>
                 <ListItemButton
                   sx={{
@@ -274,43 +289,54 @@ export default function ContactList() {
           Contact-Book:
         </Grid>
 
-        {/* {contacts.map((item: any) => { */}
-        <Box display="flex" justifyContent="center">
-          <Box width="25%" padding="10px">
-            <Grid
-              display="flex"
-              justifyContent="space-between"
-              bgcolor="lightblue"
-              borderRadius="20px"
-              padding="10px">
-              <Grid display="flex" alignItems="center">
-                <FaceRetouchingNaturalIcon sx={{ fontSize: "35px" }} />
-                <Grid marginLeft="25px" marginTop="10px" marginBottom="10px">
-                  <Typography>Name: Akmaldin</Typography>
-                  {/* <Typography>`name: ${item.name}`</Typography> */}
-                  <Typography>LastName: Kushanlo</Typography>
-                  <Typography>Phone: 9966703902533</Typography>
-                </Grid>
-              </Grid>
+        {contacts
+          ? contacts.map((item: any) => (
+              <Box display="flex" justifyContent="center">
+                <Box width="25%" padding="10px">
+                  <Grid
+                    display="flex"
+                    justifyContent="space-between"
+                    bgcolor="lightblue"
+                    borderRadius="20px"
+                    padding="10px">
+                    <Grid display="flex" alignItems="center">
+                      <FaceRetouchingNaturalIcon sx={{ fontSize: "35px" }} />
+                      <Grid
+                        marginLeft="25px"
+                        marginTop="10px"
+                        marginBottom="10px">
+                        <Typography>Name: {item.name}</Typography>
+                        <Typography>LastName: {item.lastName}</Typography>
+                        <Typography>Phone: {item.phone}</Typography>
+                      </Grid>
+                    </Grid>
 
-              <Grid marginTop="7px" display="flex" flexDirection="column">
-                <IconButton aria-label="delete">
-                  <DeleteIcon />
-                </IconButton>
-                {/* <Button>
+                    <Grid marginTop="7px" display="flex" flexDirection="column">
+                      <IconButton
+                        aria-label="delete"
+                        onClick={() => dispatch(deleteContact(item.id))}>
+                        <DeleteIcon />
+                      </IconButton>
+                      {/* <Button>
                   <DeleteForeverIcon
                     sx={{ fontSize: "40px" }}
                     // onClick={() => dispatch(deleteContact(item.id))}
                   />
                 </Button> */}
-                <Button>
-                  <FaceRetouchingOffIcon sx={{ fontSize: "25px" }} />
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-        {/* })} */}
+                      {/* onClick={() => navigate(`/edit/${productDetails.id}`) */}
+
+                      <Button
+                        onClick={() =>
+                          navigate(`/edit/${getOneContactDetails(item.id)}`)
+                        }>
+                        <FaceRetouchingOffIcon sx={{ fontSize: "25px" }} />
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Box>
+            ))
+          : null}
         {/* <Typography paragraph>{item.name}</Typography>; */}
       </Box>
 

@@ -1,5 +1,5 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import { contactsForm } from "../../store/actions/contacts";
 import { createContact } from "../../store/actions/contacts";
@@ -14,8 +14,10 @@ const ContactAdd = () => {
 
   const addContact = () => {
     dispatch(createContact(name, lastName, +phone));
+    setName("");
+    setLastName("");
+    setPhone("");
   };
-
   return (
     <div style={{ marginTop: "150px" }}>
       <h2 style={{ display: "flex", justifyContent: "center" }}>
@@ -51,7 +53,7 @@ const ContactAdd = () => {
           // placeholder="phone..."
         />
         <Link style={{ textDecoration: "none" }} to="/">
-          <Button variant="contained" onClick={addContact}>
+          <Button variant="outlined" onClick={addContact}>
             Add contact
           </Button>
         </Link>
